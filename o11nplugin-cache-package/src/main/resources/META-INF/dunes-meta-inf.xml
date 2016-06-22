@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>127.0.0.1:8230</comment>
+<entry key="pkg-description">Cache package</entry>
+<entry key="pkg-name">com.vmware.o11n.plugin.cache</entry>
+<entry key="used-plugins">Cache#1.0.0-SNAPSHOT</entry>
+<entry key="pkg-owner">My Company</entry>
+<entry key="pkg-id">4452345677834623546676486409864864098</entry>
+</properties>

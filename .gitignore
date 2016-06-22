@@ -1,0 +1,10 @@
+target/
+.settings/
+.classpath
+.project
+*.vmoapp
+*.zip
+o11nplugin-cache-package/src/main/resources/META-INF/history/
+build/
+vso.xml
+.DS_Store
