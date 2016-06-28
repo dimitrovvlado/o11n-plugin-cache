@@ -1,6 +1,6 @@
 package com.vmware.o11n.plugin.cache;
 
-import java.util.concurrent.TimeUnit;
+import com.vmware.o11n.plugin.cache.hazelcast.model.TimeUnit;
 
 public interface CacheService {
 

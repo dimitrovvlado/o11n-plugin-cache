@@ -1,12 +1,11 @@
 package com.vmware.o11n.plugin.cache.singleton;
 
-import java.util.concurrent.TimeUnit;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.vmware.o11n.plugin.cache.CacheService;
+import com.vmware.o11n.plugin.cache.hazelcast.model.TimeUnit;
 
 @Component
 @Scope(value = "prototype")

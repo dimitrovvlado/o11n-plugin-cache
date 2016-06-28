@@ -1,7 +1,6 @@
 package com.vmware.o11n.plugin.cache;
 
-import java.util.concurrent.TimeUnit;
-
+import com.vmware.o11n.plugin.cache.hazelcast.model.TimeUnit;
 import com.vmware.o11n.plugin.cache.singleton.CacheManager;
 import com.vmware.o11n.sdk.modeldrivengen.mapping.AbstractMapping;
 

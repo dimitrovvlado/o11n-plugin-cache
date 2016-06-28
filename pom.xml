@@ -10,6 +10,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vco.version>7.1.0</vco.version>
+        <junit.version>4.11</junit.version>
     </properties>
 
     <dependencyManagement>
@@ -32,6 +33,12 @@
                 <version>${vco.version}</version>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 

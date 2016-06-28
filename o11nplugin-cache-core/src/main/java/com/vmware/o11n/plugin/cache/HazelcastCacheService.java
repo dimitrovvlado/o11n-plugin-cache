@@ -1,12 +1,11 @@
 package com.vmware.o11n.plugin.cache;
 
-import java.util.concurrent.TimeUnit;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.vmware.o11n.plugin.cache.hazelcast.HazelcastInstanceWrapper;
+import com.vmware.o11n.plugin.cache.hazelcast.model.TimeUnit;
 
 @Component
 public class HazelcastCacheService implements CacheService, InitializingBean {
@@ -23,7 +22,7 @@ public class HazelcastCacheService implements CacheService, InitializingBean {
 
 	@Override
 	public String put(String key, String value, long ttl, TimeUnit timeUnit) {
-		return (String) hazelcastWrapper.getInstance().getMap(defaultMapName).put(key, value, ttl, timeUnit);
+		return (String) hazelcastWrapper.getInstance().getMap(defaultMapName).put(key, value, ttl, timeUnit.convertToConcurrentTimeUnit());
 	}
 
 	@Override
