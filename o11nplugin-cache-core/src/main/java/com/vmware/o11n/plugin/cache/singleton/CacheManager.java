@@ -10,7 +10,7 @@ import com.vmware.o11n.plugin.cache.CacheService;
 
 @Component
 @Scope(value = "prototype")
-public class Manager {
+public class CacheManager {
 	
 	@Autowired
 	private CacheService service;
