@@ -3,7 +3,7 @@ package com.vmware.o11n.plugin.cache;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.vmware.o11n.plugin.cache.hazelcast.model.TimeUnit;
+import com.vmware.o11n.plugin.cache.model.TimeUnit;
 
 public class TimeUnitTest {
 

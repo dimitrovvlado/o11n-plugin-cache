@@ -13,7 +13,7 @@
     <bean class="com.vmware.o11n.sdk.modeldriven.impl.DefaultInventoryService" />
     <bean class="com.vmware.o11n.sdk.modeldriven.impl.DefaultObjectFactory" />
     <bean class="com.vmware.o11n.sdk.modeldriven.impl.DefaultCollectionFactory" />
-    <bean class="com.vmware.o11n.sdk.modeldriven.impl.DefaultModelClassResolver" />
+    <bean class="com.vmware.o11n.sdk.modeldriven.impl.DefaultProxyResolver" />
     <bean class="com.vmware.o11n.sdk.modeldriven.impl.DefaultRuntimeConfiguration">
         <property name="properties">
             <util:properties location="com/vmware/o11n/plugin/cache_gen/runtime-config.properties" />

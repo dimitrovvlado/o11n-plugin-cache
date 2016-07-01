@@ -4,25 +4,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.vmware.o11n.plugin.cache.CacheService;
-import com.vmware.o11n.plugin.cache.hazelcast.model.TimeUnit;
+import com.vmware.o11n.plugin.cache.service.IdGeneratorService;
+import com.vmware.o11n.plugin.cache.service.MapService;
+import com.vmware.o11n.plugin.cache.service.QueueService;
 
 @Component
 @Scope(value = "prototype")
 public class CacheManager {
-	
-	@Autowired
-	private CacheService service;
-	
-	public String put(String key, String value, long ttl, TimeUnit timeUnit) {
-		if (timeUnit != null) {
-			return service.put(key, value, ttl, timeUnit);
-		}
-		return service.put(key, value); 
-	}
-	
-	public String get(String key) {
-		return service.get(key);
-	}
-	
+
+    @Autowired
+    private MapService mapService;
+
+    @Autowired
+    private QueueService queueService;
+
+    @Autowired
+    private IdGeneratorService idGeneratorService;
+
+    public MapService getMapService() {
+        return mapService;
+    }
+
+    public QueueService getQueueService() {
+        return queueService;
+    }
+
+    public IdGeneratorService getIdGeneratorService() {
+        return idGeneratorService;
+    }
+
 }
