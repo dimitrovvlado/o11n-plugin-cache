@@ -34,3 +34,11 @@ CacheManager.queueService.offer("my-value");
 //Poll a value from the default queue
 var value = CacheManager.queueService.poll();
 ```
+
+Using ID generators:
+```javascript
+//Create a unique ID with the default generator
+var id = CacheManager.idGeneratorService.newId();
+//Create a unique ID with a named ID generator
+var id = CacheManager.idGeneratorService.newIdForGenerator("my-id-generator");
+```
