@@ -111,7 +111,7 @@
 				<executions>
 					<execution>
 						<id>CreateVmoApp</id>
-						<phase>install</phase>
+						<phase>post-integration-test</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
@@ -160,7 +160,7 @@
 				<executions>
 					<execution>
 						<id>copy-dar-file</id>
-						<phase>pre-integration-test</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
@@ -170,7 +170,7 @@
 								<resource>
 									<directory>${basedir}/target/</directory>
 									<includes>
-										<include>${project.build.finalName}.${project.packaging}</include>
+										<include>${project.build.finalName}.vmoapp</include>
 									</includes>
 								</resource>
 							</resources>

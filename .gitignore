@@ -2,7 +2,6 @@ target/
 .settings/
 .classpath
 .project
-*.vmoapp
 *.zip
 o11nplugin-cache-package/src/main/resources/META-INF/history/
 build/
