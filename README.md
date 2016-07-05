@@ -10,7 +10,7 @@ Basic features of the plug-in:
  * Peer-to-peer comminication with the other vRO nodes
 
 ### Plugin download
-[o11nplugin-cache-1.0.0.dar](https://github.com/dimitrovvlado/o11n-plugin-cache/blob/master/dist/o11nplugin-cache.dar?raw=true) 
+[o11nplugin-cache-1.0.0.vmoapp](https://github.com/dimitrovvlado/o11n-plugin-cache/blob/master/dist/o11nplugin-cache.vmoapp?raw=true) 
 
 ### Supported platform version
 The Cache plug-in supports vRO 6.0 and later.
