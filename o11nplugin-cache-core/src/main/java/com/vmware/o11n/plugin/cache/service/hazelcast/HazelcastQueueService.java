@@ -1,5 +1,6 @@
 package com.vmware.o11n.plugin.cache.service.hazelcast;
 
+import com.vmware.o11n.plugin.cache.model.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,23 +18,41 @@ public class HazelcastQueueService implements QueueService {
     private HazelcastInstanceWrapper hazelcastWrapper;
 
     @Override
-    public boolean offerForQueue(String queueName, String value) {
-        return hazelcastWrapper.getInstance().getQueue(queueName).offer(value);
+    public boolean offerForQueue(String queueName, String value, long timeout, TimeUnit timeUnit) {
+        if (timeUnit == null) {
+            return hazelcastWrapper.getInstance().getQueue(queueName).offer(value);
+        }
+        try {
+            // Wrap in runtime exception, as the orchestrator doesn't care about
+            // the type of the exception
+            return hazelcastWrapper.getInstance().getQueue(queueName).offer(value, timeout, timeUnit.convertToConcurrentTimeUnit());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public boolean offer(String value) {
-        return offerForQueue(defaultQueueName, value);
+    public boolean offer(String value, long timeout, TimeUnit timeUnit) {
+        return offerForQueue(defaultQueueName, value, timeout, timeUnit);
     }
 
     @Override
-    public String pollForQueue(String queueName) {
-        return (String) hazelcastWrapper.getInstance().getQueue(queueName).poll();
+    public String pollForQueue(String queueName, long timeout, TimeUnit timeUnit) {
+        if (timeUnit == null) {
+            return (String) hazelcastWrapper.getInstance().getQueue(queueName).poll();
+        }
+        try {
+            // Wrap in runtime exception, as the orchestrator doesn't care about
+            // the type of the exception
+            return (String) hazelcastWrapper.getInstance().getQueue(queueName).poll(timeout, timeUnit.convertToConcurrentTimeUnit());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public String poll() {
-        return pollForQueue(defaultQueueName);
+    public String poll(long timeout, TimeUnit timeUnit) {
+        return pollForQueue(defaultQueueName, timeout, timeUnit);
     }
 
     @Override
@@ -52,4 +71,49 @@ public class HazelcastQueueService implements QueueService {
         putForQueue(defaultQueueName, value);
     }
 
+    @Override
+    public String takeForQueue(String queueName) {
+        try {
+            // Wrap in runtime exception, as the orchestrator doesn't care about
+            // the type of the exception
+            return (String)hazelcastWrapper.getInstance().getQueue(queueName).take();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String take() {
+        return takeForQueue(defaultQueueName);
+    }
+
+    @Override
+    public void removeForQueue(String queueName) {
+        hazelcastWrapper.getInstance().getQueue(queueName).remove();
+    }
+
+    @Override
+    public void remove() {
+        removeForQueue(defaultQueueName);
+    }
+
+    @Override
+    public int getSizeForQueue(String queueName) {
+        return hazelcastWrapper.getInstance().getQueue(queueName).size();
+    }
+
+    @Override
+    public int getSize() {
+        return getSizeForQueue(defaultQueueName);
+    }
+
+    @Override
+    public int getRemainingCapacityForQueue(String queueName) {
+        return hazelcastWrapper.getInstance().getQueue(queueName).remainingCapacity();
+    }
+
+    @Override
+    public int getRemainingCapacity() {
+        return getRemainingCapacityForQueue(defaultQueueName);
+    }
 }

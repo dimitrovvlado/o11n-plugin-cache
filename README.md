@@ -16,29 +16,43 @@ Basic features of the plug-in:
 The Cache plug-in supports vRO 6.0 and later.
 
 ### Sample scripting
-Using maps:
+
+#####Using maps:
 
 ```javascript
 //Put a value in the default map without TTL
 CacheManager.mapService.put("my-key", "my-value");
+
 //Put a value in the default map with a TTL of 2 minutes
 CacheManager.mapService.put("my-key", "my-other-value", 2, CacheTimeUnit.MINUTES);
+
 //Get the value from the map
 var value = CacheManager.mapService.get("my-key");
 ```
 
-Using queues:
+#####Using queues:
 ```javascript
-//Offer a value in the default queue
+//Offer a value in the default queue, waiting up to 2 minutes if necessary for space to become available
+CacheManager.queueService.offer("my-value", 2, CacheTimeUnit.MINUTES);
+
+//Offer a value in the default queue, waiting if necessary for space to become available
 CacheManager.queueService.offer("my-value");
+
 //Poll a value from the default queue
 var value = CacheManager.queueService.poll();
+
+//Put a value from the default queue, waiting if necessary for space to become available
+CacheManager.queueService.put("my-value");
+
+//Retrieve and remove the head of the queue. Throws an exception if queue is empty
+val value = CacheManager.queueService.remove();
 ```
 
-Using ID generators:
+#####Using ID generators:
 ```javascript
 //Create a unique ID with the default generator
 var id = CacheManager.idGeneratorService.newId();
+
 //Create a unique ID with a named ID generator
 var id = CacheManager.idGeneratorService.newIdForGenerator("my-id-generator");
 ```
