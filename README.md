@@ -17,8 +17,19 @@ The Cache plug-in supports vRO 6.0 and later.
 
 ### Sample scripting
 
-#####Using maps:
+#####Using lists:
+```javascript
+//Add a value in the default list
+CacheManager.listService.add("my-value");
 
+//Get the first value from the list
+CacheManager.listService.get(0);
+
+//Clear the default list
+CacheManager.listService.clear();
+```
+
+#####Using maps:
 ```javascript
 //Put a value in the default map without TTL
 CacheManager.mapService.put("my-key", "my-value");

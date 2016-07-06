@@ -6,20 +6,20 @@ import java.util.Set;
 
 public interface MapService {
 
-    public String put(String key, String value, long ttl, TimeUnit timeUnit);
+    String put(String key, String value, long ttl, TimeUnit timeUnit);
 
-    public String putForMap(String mapName, String key, String value, long ttl, TimeUnit timeUnit);
+    String putForMap(String mapName, String key, String value, long ttl, TimeUnit timeUnit);
 
-    public String get(String key);
+    String get(String key);
 
-    public String getForMap(String mapName, String key);
+    String getForMap(String mapName, String key);
 
-    public void delete(String key);
+    void delete(String key);
 
-    public void deleteForMap(String mapName, String key);
+    void deleteForMap(String mapName, String key);
 
-    public Set<String> keys();
+    Set<String> keys();
 
-    public Set<String> keysForMap(String mapName);
+    Set<String> keysForMap(String mapName);
 
 }

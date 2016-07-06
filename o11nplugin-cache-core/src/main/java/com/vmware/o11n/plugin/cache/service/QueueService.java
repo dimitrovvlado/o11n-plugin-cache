@@ -4,13 +4,13 @@ import com.vmware.o11n.plugin.cache.model.TimeUnit;
 
 public interface QueueService {
 
-    public boolean offerForQueue(String queueName, String value, long timeout, TimeUnit timeUnit);
+    boolean offerForQueue(String queueName, String value, long timeout, TimeUnit timeUnit);
 
-    public boolean offer(String value, long timeout, TimeUnit timeUnit);
+    boolean offer(String value, long timeout, TimeUnit timeUnit);
 
-    public String pollForQueue(String queueName, long timeout, TimeUnit timeUnit);
+    String pollForQueue(String queueName, long timeout, TimeUnit timeUnit);
 
-    public String poll(long timeout, TimeUnit timeUnit);
+    String poll(long timeout, TimeUnit timeUnit);
 
     /**
      * Inserts the specified element into this queue, waiting if necessary
@@ -18,28 +18,28 @@ public interface QueueService {
      * @param queueName the name of the queue where the value should be put
      * @param value the string value to be put in the queue
      */
-    public void putForQueue(String queueName, String value);
+    void putForQueue(String queueName, String value);
 
     /**
      * Inserts the specified element into this queue, waiting if necessary
      * for space to become available.
      * @param value the string value to be put in the queue
      */
-    public void put(String value);
+    void put(String value);
 
-    public String takeForQueue(String queueName);
+    String takeForQueue(String queueName);
 
-    public String take();
+    String take();
 
-    public void removeForQueue(String queueName);
+    void removeForQueue(String queueName);
 
-    public void remove();
+    void remove();
 
-    public int getSizeForQueue(String queueName);
+    int getSizeForQueue(String queueName);
 
-    public int getSize();
+    int getSize();
 
-    public int getRemainingCapacityForQueue(String queueName);
+    int getRemainingCapacityForQueue(String queueName);
 
-    public int getRemainingCapacity();
+    int getRemainingCapacity();
 }

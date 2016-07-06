@@ -159,7 +159,7 @@
 				<version>3.0.1</version>
 				<executions>
 					<execution>
-						<id>copy-dar-file</id>
+						<id>copy-vmoapp-file</id>
 						<phase>install</phase>
 						<goals>
 							<goal>copy-resources</goal>

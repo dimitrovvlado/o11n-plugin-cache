@@ -1,5 +1,6 @@
 package com.vmware.o11n.plugin.cache.singleton;
 
+import com.vmware.o11n.plugin.cache.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,9 @@ import com.vmware.o11n.plugin.cache.service.QueueService;
 public class CacheManager {
 
     @Autowired
+    private ListService listService;
+
+    @Autowired
     private MapService mapService;
 
     @Autowired
@@ -20,6 +24,10 @@ public class CacheManager {
 
     @Autowired
     private IdGeneratorService idGeneratorService;
+
+    public ListService getListService() {
+        return listService;
+    }
 
     public MapService getMapService() {
         return mapService;
