@@ -23,10 +23,22 @@ The Cache plug-in supports vRO 6.0 and later.
 CacheManager.listService.add("my-value");
 
 //Get the first value from the list
-CacheManager.listService.get(0);
+var value = CacheManager.listService.get(0);
 
 //Clear the default list
 CacheManager.listService.clear();
+```
+
+#####Using sets:
+```javascript
+//Add a value in the default set
+CacheManager.setService.add("my-value");
+
+//Get the elements from the default set
+var elements = CacheManager.setService.elements();
+
+//Clear the default set
+CacheManager.setService.clear();
 ```
 
 #####Using maps:
