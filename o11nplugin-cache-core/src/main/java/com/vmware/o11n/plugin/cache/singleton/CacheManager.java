@@ -24,6 +24,9 @@ public class CacheManager {
     @Autowired
     private IdGeneratorService idGeneratorService;
 
+    @Autowired
+    private LockService lockService;
+
     public ListService getListService() {
         return listService;
     }
@@ -42,6 +45,10 @@ public class CacheManager {
 
     public IdGeneratorService getIdGeneratorService() {
         return idGeneratorService;
+    }
+
+    public LockService getLockService() {
+        return lockService;
     }
 
 }

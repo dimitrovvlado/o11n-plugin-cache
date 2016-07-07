@@ -14,6 +14,7 @@ public class CustomMapping extends AbstractMapping {
 		wrap(MapService.class).as("Map");
 		wrap(QueueService.class).as("Queue");
 		wrap(IdGeneratorService.class).as("IdGenerator");
+        wrap(LockService.class).as("Lock");
 		enumerate(TimeUnit.class);
 	}
 }

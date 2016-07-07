@@ -3,11 +3,10 @@ The Cache plug-in for vRealize Orchestrator is a a plug-in which provides distri
 
 Basic features of the plug-in:
 
- * Distributed in-memory map with TTL option
- * Distributed in-memory queue with TTL option
- * Unique ID generator
- * Automatic autodiscovery with other vRO nodes which belong to the cluster
- * Peer-to-peer comminication with the other vRO nodes
+ * Distributed in-memory data structures with TTL/lease options
+ * Distributed unique ID generation
+ * Distributed locking
+ * Automatic auto-discovery with other vRO nodes which belong to the cluster
 
 ### Plugin download
 [o11nplugin-cache-1.0.0.vmoapp](https://github.com/dimitrovvlado/o11n-plugin-cache/blob/master/dist/o11nplugin-cache.vmoapp?raw=true) 
@@ -79,3 +78,22 @@ var id = CacheManager.idGeneratorService.newId();
 //Create a unique ID with a named ID generator
 var id = CacheManager.idGeneratorService.newIdForGenerator("my-id-generator");
 ```
+
+#####Using locks:
+```javascript
+//Acquires a lock
+CacheManager.lockService.lock();
+
+//Releases the lock
+CacheManager.lockService.unlock();
+
+//Tries to acquire a lock if it is free within 10 seconds
+CacheManager.lockService.tryLock(10, CacheTimeUnit.SECONDS);
+
+//Tries to acquire a lock for 2 minutes, if it is free within 10 seconds
+CacheManager.lockService.tryLockWithLease(10, CacheTimeUnit.SECONDS, 2, CacheTimeUnit.MINUTES);
+```
+
+### Dependencies
+
+The Cache plug-in for vRO uses [Hazelcast](https://hazelcast.com/) - an in-memory data grid middleware, provided under the Apache License, Version 2.0.
