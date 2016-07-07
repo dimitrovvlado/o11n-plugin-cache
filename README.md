@@ -95,5 +95,6 @@ CacheManager.lockService.tryLockWithLease(10, CacheTimeUnit.SECONDS, 2, CacheTim
 ```
 
 ### Dependencies
-
-The Cache plug-in for vRO uses [Hazelcast](https://hazelcast.com/) - an in-memory data grid middleware, provided under the Apache License, Version 2.0.
+The Cache plug-in for vRO uses the following third-party libraries:
+* [Hazelcast](https://hazelcast.com/) - an in-memory data grid middleware, distributed under the Apache License, Version 2.0.
+* [Google Guava](https://github.com/google/guava) - core libraries for Java-based projects, distributed under the Apache License, Version 2.0
