@@ -88,32 +88,32 @@ public class HazelcastQueueService implements QueueService {
     }
 
     @Override
-    public void removeForQueue(String queueName) {
-        hazelcastWrapper.getInstance().getQueue(queueName).remove();
+    public String removeForQueue(String queueName) {
+        return (String) hazelcastWrapper.getInstance().getQueue(queueName).remove();
     }
 
     @Override
-    public void remove() {
-        removeForQueue(defaultQueueName);
+    public String remove() {
+        return removeForQueue(defaultQueueName);
     }
 
     @Override
-    public int getSizeForQueue(String queueName) {
+    public int sizeForQueue(String queueName) {
         return hazelcastWrapper.getInstance().getQueue(queueName).size();
     }
 
     @Override
-    public int getSize() {
-        return getSizeForQueue(defaultQueueName);
+    public int size() {
+        return sizeForQueue(defaultQueueName);
     }
 
     @Override
-    public int getRemainingCapacityForQueue(String queueName) {
+    public int remainingCapacityForQueue(String queueName) {
         return hazelcastWrapper.getInstance().getQueue(queueName).remainingCapacity();
     }
 
     @Override
-    public int getRemainingCapacity() {
-        return getRemainingCapacityForQueue(defaultQueueName);
+    public int remainingCapacity() {
+        return remainingCapacityForQueue(defaultQueueName);
     }
 }
