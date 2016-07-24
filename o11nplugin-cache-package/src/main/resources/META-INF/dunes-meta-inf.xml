@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>127.0.0.1:8230</comment>
-<entry key="pkg-description">Cache package</entry>
-<entry key="pkg-name">com.vmware.o11n.plugin.cache</entry>
-<entry key="used-plugins">Cache#1.0.0-SNAPSHOT</entry>
-<entry key="pkg-owner">My Company</entry>
-<entry key="pkg-id">4452345677834623546676486409864864098</entry>
+<comment>localhost:8281</comment>
+<entry key="vso-build-nb">${BUILD_NUMBER}</entry>
+<entry key="pkg-description"></entry>
+<entry key="pkg-name">com.vmware.library.cache</entry>
+<entry key="used-plugins">Cache#1.0.0</entry>
+<entry key="pkg-owner">O=VMware,OU=Unknown,CN=vRO Vladimirs-MacBook-Pro.local 9b5f2bc0-8db4-43f2-bb2f-7670bd4935f4</entry>
+<entry key="vso-version">7.1.0.${BUILD_NUMBER}</entry>
+<entry key="pkg-id">402881f7561dacb401561db288ba0040</entry>
 </properties>

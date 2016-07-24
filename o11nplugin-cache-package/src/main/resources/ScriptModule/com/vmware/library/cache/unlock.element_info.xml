@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Exported from [server]</comment>
+<entry key="categoryPath">com.vmware.library.cache</entry>
+<entry key="name">unlock</entry>
+<entry key="type">ScriptModule</entry>
+<entry key="id">5f289366-f4e3-4519-8a15-872d8581e4b7</entry>
+</properties>

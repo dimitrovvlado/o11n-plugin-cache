@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="lock" result-type="void" api-version="6.0.0" id="e05b21b5-05b8-4102-8325-f1de70f1231d" version="1.0.0" allowed-operations="vef">
+  <description><![CDATA[Acquired a lock for a certain workflow execution]]></description>
+  <param n="leaseTime" t="number"><![CDATA[Lease time]]></param>
+  <param n="timeUnit" t="Cache:TimeUnit"><![CDATA[Time unit]]></param>
+  <script encoded="false"><![CDATA[var tokenId = workflow.id;
+System.log("Acquiring lock for workflow with token: " + tokenId);
+CacheManager.lockService.lock(tokenId, leaseTime, timeUnit);]]></script>
+</dunes-script-module>

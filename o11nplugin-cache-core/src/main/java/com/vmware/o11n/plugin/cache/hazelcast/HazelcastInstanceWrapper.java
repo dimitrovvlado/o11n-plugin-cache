@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.hazelcast.config.ServiceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -45,6 +46,13 @@ public class HazelcastInstanceWrapper implements InitializingBean {
         networkConfig.getJoin().getTcpIpConfig().setEnabled(true);
         networkConfig.setPortAutoIncrement(true);
         networkConfig.getJoin().getTcpIpConfig().addMember("127.0.0.1");
+
+        ServiceConfig serviceConfig = new ServiceConfig();
+        serviceConfig.setName(LockServiceImpl.SERVICE_NAME);
+        serviceConfig.setEnabled(true);
+        serviceConfig.setClassName(LockServiceImpl.class.getCanonicalName());
+
+        config.getServicesConfig().addServiceConfig(serviceConfig);
     }
 
     @Override

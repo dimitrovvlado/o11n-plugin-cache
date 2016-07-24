@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="unlock" result-type="void" api-version="6.0.0" id="5f289366-f4e3-4519-8a15-872d8581e4b7" version="1.0.0" allowed-operations="vef">
+  <description><![CDATA[Releases the lock only if the workflow token is the owner of the lock, otherwise this action will fail.]]></description>
+  <script encoded="false"><![CDATA[var tokenId = workflow.id;
+System.log("Releases lock for workflow token: " + tokenId);
+CacheManager.lockService.unlock(tokenId);]]></script>
+</dunes-script-module>

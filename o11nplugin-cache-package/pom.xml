@@ -26,12 +26,13 @@
                 <version>${vco.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <packageName>com.vmware.o11n.plugin.cache</packageName>
+                    <packageName>com.vmware.library.cache</packageName>
                     <!-- Set the local path to the *.vmokeystore file used to sign the content -->
                     <keystoreLocation>${keystoreLocation}</keystoreLocation>
                     <keystorePassword>${keystorePassword}</keystorePassword>
                     <includes>
                         <include>**/Library/Cache/**/*.element_info.xml</include>
+                        <include>**/com/vmware/library/cache/**/*.element_info.xml</include>
                     </includes>
                     <packageFileName>o11nplugin-cache-package-${project.version}</packageFileName>
                     <allowedMask>vef</allowedMask>

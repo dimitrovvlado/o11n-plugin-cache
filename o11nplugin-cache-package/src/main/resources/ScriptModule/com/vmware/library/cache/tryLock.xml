@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dunes-script-module name="tryLock" result-type="boolean" api-version="6.0.0" id="4b9762be-edcc-405b-8dff-0ea0fa5e4060" version="1.0.0" allowed-operations="vef">
+  <description><![CDATA[Acquires the lock only if it is free at the time of invocation. If timeUnit is provided, will try within the given time. If the lock is not available and the timeUnit is null, then this method will return immediately with the value false.]]></description>
+  <param n="leaseTime" t="number"><![CDATA[Lease time]]></param>
+  <param n="timeUnit" t="Cache:TimeUnit"><![CDATA[Time unit]]></param>
+  <script encoded="false"><![CDATA[var tokenId = workflow.id;
+System.log("Locking workflow with token: " + tokenId);
+return CacheManager.lockService.tryLock(tokenId, leaseTime, timeUnit);]]></script>
+</dunes-script-module>
