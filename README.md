@@ -91,7 +91,7 @@ CacheManager.lockService.unlock(workflow.id);
 var result = CacheManager.lockService.tryLock(workflow.id, 10, CacheTimeUnit.SECONDS);
 
 //Tries to acquire a lock for 2 minutes, if it is free within 10 seconds. Returns true if succeeded
-CacheManager.lockService.tryLockWithLease(workflow.id, 10, CacheTimeUnit.SECONDS, 2, CacheTimeUnit.MINUTES);
+var resut = CacheManager.lockService.tryLockWithLease(workflow.id, 10, CacheTimeUnit.SECONDS, 2, CacheTimeUnit.MINUTES);
 ```
 
 ### Dependencies
