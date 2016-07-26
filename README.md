@@ -70,6 +70,19 @@ CacheManager.queueService.put("my-value");
 val value = CacheManager.queueService.remove();
 ```
 
+#####Using ring buffers:
+```javascript
+//Adds an item to the tail of the ringbuffer 
+CacheManager.ringbufferService.add("my-value");
+//Get the sequence of the head
+var sequence = CacheManager.ringbufferService.headSequence();
+while(true){
+    //Reads the item from the ringbuffer
+    var item = CacheManager.ringbufferService.readOne(sequence);
+    sequence++;
+}
+```
+
 #####Using ID generators:
 ```javascript
 //Create a unique ID with the default generator

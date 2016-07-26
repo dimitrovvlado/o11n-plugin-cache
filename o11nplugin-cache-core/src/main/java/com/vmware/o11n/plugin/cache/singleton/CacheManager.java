@@ -22,6 +22,9 @@ public class CacheManager {
     private QueueService queueService;
 
     @Autowired
+    private RingbufferService ringbufferService;
+
+    @Autowired
     private IdGeneratorService idGeneratorService;
 
     @Autowired
@@ -41,6 +44,10 @@ public class CacheManager {
 
     public QueueService getQueueService() {
         return queueService;
+    }
+
+    public RingbufferService getRingbufferService() {
+        return ringbufferService;
     }
 
     public IdGeneratorService getIdGeneratorService() {
