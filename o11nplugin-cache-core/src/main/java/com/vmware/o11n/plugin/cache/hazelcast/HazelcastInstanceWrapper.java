@@ -3,11 +3,13 @@ package com.vmware.o11n.plugin.cache.hazelcast;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.hazelcast.config.ServiceConfig;
+import com.hazelcast.core.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -96,6 +98,15 @@ public class HazelcastInstanceWrapper implements InitializingBean {
      */
     public HazelcastInstance getInstance() {
         return instance;
+    }
+
+    /**
+     * Return the members of the cluster.
+     *
+     * @return the members of the cluster.
+     */
+    public List<Member> getMembers() {
+        return new ArrayList<>(getInstance().getCluster().getMembers());
     }
 
     /**
