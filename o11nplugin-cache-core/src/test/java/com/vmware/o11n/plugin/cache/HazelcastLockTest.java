@@ -43,6 +43,12 @@ public class HazelcastLockTest {
         instance2 = Hazelcast.newHazelcastInstance(config);
     }
 
+    @AfterClass
+    public static void destroy() {
+        instance1.shutdown();
+        instance2.shutdown();
+    }
+
     @After
     public void tearDown() {
         ILock lock = instance1.getDistributedObject(LockServiceImpl.SERVICE_NAME, LOCK_NAME);

@@ -9,6 +9,7 @@ import com.hazelcast.core.Member;
 import com.hazelcast.instance.NodeState;
 import com.vmware.o11n.plugin.cache.hazelcast.LockServiceImpl;
 import com.vmware.o11n.plugin.cache.util.HazelcastUtils;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,7 +20,8 @@ public class HazelcastUtilsTest {
 
     private static Config config;
 
-    private static HazelcastInstance instance;
+    private static HazelcastInstance instance1;
+    private static HazelcastInstance instance2;
 
     @BeforeClass
     public static void setup() {
@@ -37,13 +39,19 @@ public class HazelcastUtilsTest {
 
         config.getServicesConfig().addServiceConfig(serviceConfig);
 
-        instance = Hazelcast.newHazelcastInstance(config);
-        Hazelcast.newHazelcastInstance(config);
+        instance1 = Hazelcast.newHazelcastInstance(config);
+        instance2 = Hazelcast.newHazelcastInstance(config);
+    }
+
+    @AfterClass
+    public static void destroy() {
+        instance1.shutdown();
+        instance2.shutdown();
     }
 
     @Test
     public void testExtractState() {
-        Set<Member> members = instance.getCluster().getMembers();
+        Set<Member> members = instance1.getCluster().getMembers();
         for (Member m : members) {
             String state = HazelcastUtils.extractMemberState(m);
             Assert.assertEquals(NodeState.ACTIVE.toString(), state);
@@ -52,7 +60,7 @@ public class HazelcastUtilsTest {
 
     @Test
     public void testExtractLocality() {
-        Set<Member> members = instance.getCluster().getMembers();
+        Set<Member> members = instance1.getCluster().getMembers();
         boolean atLeastOne = false;
         for (Member m : members) {
             boolean isLocal = HazelcastUtils.extractMemberLocality(m);

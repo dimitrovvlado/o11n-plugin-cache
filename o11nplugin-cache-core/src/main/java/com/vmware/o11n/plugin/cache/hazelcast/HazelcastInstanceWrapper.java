@@ -30,24 +30,38 @@ public class HazelcastInstanceWrapper implements InitializingBean {
 
     private static final Logger log = LoggerFactory.getLogger(HazelcastInstanceWrapper.class);
 
-    @Autowired
-    private IEndpointConfigurationService configurationService;
+    private final IEndpointConfigurationService configurationService;
 
     private HazelcastInstance instance;
-    private final Config config;
-
+    private Config config;
     private String localAddress;
+
+    @Value("#{systemProperties['cache-plugin.connect.port'] ?: 5701}")
+    private int port;
 
     @Value("#{systemProperties['cache-plugin.connect.retries'] ?: 10}")
     private int retries;
 
-    public HazelcastInstanceWrapper() {
+    @Value("#{systemProperties['cache-plugin.connect.retries']}")
+    private String outboundPorts;
+
+    @Autowired
+    public HazelcastInstanceWrapper(IEndpointConfigurationService configurationService) {
+        this.configurationService = configurationService;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
         config = new Config();
         NetworkConfig networkConfig = config.getNetworkConfig();
         networkConfig.getJoin().getMulticastConfig().setEnabled(false);
         networkConfig.getJoin().getTcpIpConfig().setEnabled(true);
         networkConfig.setPortAutoIncrement(true);
+        networkConfig.setPort(port);
         networkConfig.getJoin().getTcpIpConfig().addMember("127.0.0.1");
+        if (outboundPorts != null) {
+            networkConfig.addOutboundPortDefinition(outboundPorts);
+        }
 
         ServiceConfig serviceConfig = new ServiceConfig();
         serviceConfig.setName(LockServiceImpl.SERVICE_NAME);
@@ -55,19 +69,22 @@ public class HazelcastInstanceWrapper implements InitializingBean {
         serviceConfig.setClassName(LockServiceImpl.class.getCanonicalName());
 
         config.getServicesConfig().addServiceConfig(serviceConfig);
-    }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+
         InetAddress localHost;
         try {
             localHost = InetAddress.getLocalHost();
             localAddress = localHost.getHostAddress();
 
-            IEndpointConfiguration newEndpointConfiguration = configurationService
-                    .newEndpointConfiguration(localAddress);
+            IEndpointConfiguration endpointConfiguration = configurationService.getEndpointConfiguration(localAddress);
+            if (endpointConfiguration == null) {
+                endpointConfiguration = configurationService.newEndpointConfiguration(localAddress);
+            }
+            endpointConfiguration.setString("host", localAddress);
+            endpointConfiguration.setInt("port", port);
+
             log.debug("Saving address {} as an endpoint configuration.", localAddress);
-            configurationService.saveEndpointConfiguration(newEndpointConfiguration);
+            configurationService.saveEndpointConfiguration(endpointConfiguration);
 
             boolean successfulConnect = false;
             for (int i = 0; i < retries; i++) {
