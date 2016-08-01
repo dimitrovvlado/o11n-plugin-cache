@@ -11,6 +11,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vco.version>7.0.0</vco.version>
         <junit.version>4.11</junit.version>
+        <mockito.version>1.10.19</mockito.version>
+        <spring.test.version>4.3.2.RELEASE</spring.test.version>
     </properties>
 
     <dependencyManagement>
@@ -39,6 +41,18 @@
 				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.test.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
