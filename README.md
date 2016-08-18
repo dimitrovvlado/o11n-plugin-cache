@@ -86,25 +86,25 @@ while(true){
 #####Using ID generators:
 ```javascript
 //Create a unique ID with the default generator
-var id = CacheManager.idGeneratorService.newId();
+var id = IdGeneratorManager.idGeneratorService.newId();
 
 //Create a unique ID with a named ID generator
-var id = CacheManager.idGeneratorService.newIdForGenerator("my-id-generator");
+var id = IdGeneratorManager.idGeneratorService.newIdForGenerator("my-id-generator");
 ```
 
 #####Using locks:
 ```javascript
 //Acquires a lock by current workflow token id for 2 minutes
-CacheManager.lockService.lock(workflow.id, 2, CacheTimeUnit.MINUTES);
+LockManager.lockService.lock(workflow.id, 2, CacheTimeUnit.MINUTES);
 
 //Releases the lock. Will fail if invoked from another workflow
-CacheManager.lockService.unlock(workflow.id);
+LockManager.lockService.unlock(workflow.id);
 
 //Tries to acquire a lock if it is free within 10 seconds. Returns true if succeeded
-var result = CacheManager.lockService.tryLock(workflow.id, 10, CacheTimeUnit.SECONDS);
+var result = LockManager.lockService.tryLock(workflow.id, 10, CacheTimeUnit.SECONDS);
 
 //Tries to acquire a lock for 2 minutes, if it is free within 10 seconds. Returns true if succeeded
-var resut = CacheManager.lockService.tryLockWithLease(workflow.id, 10, CacheTimeUnit.SECONDS, 2, CacheTimeUnit.MINUTES);
+var resut = LockManager.lockService.tryLockWithLease(workflow.id, 10, CacheTimeUnit.SECONDS, 2, CacheTimeUnit.MINUTES);
 ```
 
 ### Dependencies

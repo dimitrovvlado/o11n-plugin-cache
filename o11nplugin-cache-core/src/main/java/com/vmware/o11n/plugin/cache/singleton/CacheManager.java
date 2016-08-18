@@ -24,12 +24,6 @@ public class CacheManager {
     @Autowired
     private RingbufferService ringbufferService;
 
-    @Autowired
-    private IdGeneratorService idGeneratorService;
-
-    @Autowired
-    private LockService lockService;
-
     public ListService getListService() {
         return listService;
     }
@@ -48,14 +42,6 @@ public class CacheManager {
 
     public RingbufferService getRingbufferService() {
         return ringbufferService;
-    }
-
-    public IdGeneratorService getIdGeneratorService() {
-        return idGeneratorService;
-    }
-
-    public LockService getLockService() {
-        return lockService;
     }
 
 }
