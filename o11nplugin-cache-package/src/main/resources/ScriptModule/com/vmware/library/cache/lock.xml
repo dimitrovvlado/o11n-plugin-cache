@@ -5,5 +5,5 @@
   <param n="timeUnit" t="Cache:TimeUnit"><![CDATA[Time unit]]></param>
   <script encoded="false"><![CDATA[var tokenId = workflow.id;
 System.log("Acquiring lock for workflow with token: " + tokenId);
-CacheManager.lockService.lock(tokenId, leaseTime, timeUnit);]]></script>
+LockManager.lockService.lock(tokenId, leaseTime, timeUnit);]]></script>
 </dunes-script-module>

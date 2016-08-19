@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dunes-script-module name="forceUnlock" result-type="void" api-version="6.0.0" id="2f2e199d-799b-4305-91a1-0378fcd067a9" version="1.0.0" allowed-operations="vef">
   <description><![CDATA[Releases the lock regardless of the lock owner.]]></description>
-  <script encoded="false"><![CDATA[CacheManager.lockService.forceUnlock();]]></script>
+  <script encoded="false"><![CDATA[LockManager.lockService.forceUnlock();]]></script>
 </dunes-script-module>

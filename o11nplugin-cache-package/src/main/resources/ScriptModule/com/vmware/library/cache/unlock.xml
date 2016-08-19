@@ -3,5 +3,5 @@
   <description><![CDATA[Releases the lock only if the workflow token is the owner of the lock, otherwise this action will fail.]]></description>
   <script encoded="false"><![CDATA[var tokenId = workflow.id;
 System.log("Releases lock for workflow token: " + tokenId);
-CacheManager.lockService.unlock(tokenId);]]></script>
+LockManager.lockService.unlock(tokenId);]]></script>
 </dunes-script-module>
