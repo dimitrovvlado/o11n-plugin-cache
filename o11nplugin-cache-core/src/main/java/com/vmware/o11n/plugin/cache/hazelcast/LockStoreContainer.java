@@ -4,6 +4,7 @@ import com.hazelcast.concurrent.lock.LockEvictionProcessor;
 import com.hazelcast.concurrent.lock.LockStoreInfo;
 import com.hazelcast.spi.NodeEngine;
 import com.hazelcast.spi.ObjectNamespace;
+import com.hazelcast.spi.TaskScheduler;
 import com.hazelcast.util.ConcurrencyUtil;
 import com.hazelcast.util.ConstructorFunction;
 import com.hazelcast.util.scheduler.EntryTaskScheduler;
@@ -33,7 +34,7 @@ public final class LockStoreContainer {
                         if (info != null) {
                             int backupCount = info.getBackupCount();
                             int asyncBackupCount = info.getAsyncBackupCount();
-                            EntryTaskScheduler entryTaskScheduler = createScheduler(namespace);
+                            EntryTaskScheduler<?, ?> entryTaskScheduler = createScheduler(namespace);
                             return new LockStoreImpl(lockService, namespace, entryTaskScheduler, backupCount, asyncBackupCount);
                         }
                     }
@@ -78,16 +79,16 @@ public final class LockStoreContainer {
 
     public void put(LockStoreImpl ls) {
         ls.setLockService(lockService);
-        EntryTaskScheduler entryTaskScheduler = createScheduler(ls.getNamespace());
+        EntryTaskScheduler<?, ?> entryTaskScheduler = createScheduler(ls.getNamespace());
         ls.setEntryTaskScheduler(entryTaskScheduler);
         lockStores.put(ls.getNamespace(), ls);
     }
 
-    private EntryTaskScheduler createScheduler(ObjectNamespace namespace) {
+    private EntryTaskScheduler<?, ?> createScheduler(ObjectNamespace namespace) {
         NodeEngine nodeEngine = lockService.getNodeEngine();
         LockEvictionProcessor entryProcessor = new LockEvictionProcessor(nodeEngine, namespace);
-        ScheduledExecutorService scheduledExecutor =
-                nodeEngine.getExecutionService().getDefaultScheduledExecutor();
+        TaskScheduler scheduledExecutor =
+                nodeEngine.getExecutionService().getGlobalTaskScheduler();
         return EntryTaskSchedulerFactory
                 .newScheduler(scheduledExecutor, entryProcessor, ScheduleType.FOR_EACH);
     }

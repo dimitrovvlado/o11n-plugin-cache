@@ -15,6 +15,7 @@ import com.hazelcast.util.ExceptionUtil;
 import com.hazelcast.util.ThreadUtil;
 
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -80,11 +81,15 @@ final class ConditionImpl implements ICondition {
     private void beforeAwait(long threadId) {
         Data key = lockProxy.getKeyData();
         BeforeAwaitOperation op = new BeforeAwaitOperation(namespace, key, threadId, conditionId);
-        InternalCompletableFuture f = invoke(op);
-        f.getSafely();
+        InternalCompletableFuture<?> f = invoke(op);
+        try {
+			f.get();
+		} catch (InterruptedException | ExecutionException e) {
+			//ignore - replace getSafely() : TODO: check  behaviour
+		}
     }
 
-    private InternalCompletableFuture invoke(Operation op) {
+    private InternalCompletableFuture<?> invoke(Operation op) {
         NodeEngine nodeEngine = lockProxy.getNodeEngine();
         return nodeEngine.getOperationService().invokeOnPartition(SERVICE_NAME, op, partitionId);
     }
@@ -104,8 +109,12 @@ final class ConditionImpl implements ICondition {
         long threadId = ThreadUtil.getThreadId();
         Data key = lockProxy.getKeyData();
         SignalOperation op = new SignalOperation(namespace, key, threadId, conditionId, all);
-        InternalCompletableFuture f = invoke(op);
-        f.getSafely();
+        InternalCompletableFuture<?> f = invoke(op);
+        try {
+			f.get();
+		} catch (InterruptedException | ExecutionException e) {
+			//ignore - replace getSafely() : TODO: check  behaviour
+		}
     }
 
     @Override

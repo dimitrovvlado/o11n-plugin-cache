@@ -1,16 +1,16 @@
 package com.vmware.o11n.plugin.cache.hazelcast;
 
-import com.hazelcast.concurrent.lock.LockDataSerializerHook;
-import com.hazelcast.nio.ObjectDataInput;
-import com.hazelcast.nio.ObjectDataOutput;
-import com.hazelcast.nio.serialization.IdentifiedDataSerializable;
-import com.hazelcast.spi.AbstractOperation;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class LockReplicationOperation extends AbstractOperation
+import com.hazelcast.concurrent.lock.LockDataSerializerHook;
+import com.hazelcast.nio.ObjectDataInput;
+import com.hazelcast.nio.ObjectDataOutput;
+import com.hazelcast.nio.serialization.IdentifiedDataSerializable;
+import com.hazelcast.spi.Operation;
+
+public class LockReplicationOperation extends Operation
         implements IdentifiedDataSerializable {
 
     private final Collection<LockStoreImpl> locks = new LinkedList<LockStoreImpl>();

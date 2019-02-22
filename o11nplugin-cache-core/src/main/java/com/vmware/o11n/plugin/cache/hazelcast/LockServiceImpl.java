@@ -1,22 +1,6 @@
 package com.vmware.o11n.plugin.cache.hazelcast;
 
-import com.hazelcast.concurrent.lock.InternalLockNamespace;
-import com.hazelcast.concurrent.lock.LockResource;
-import com.hazelcast.concurrent.lock.LockStore;
-import com.hazelcast.concurrent.lock.LockStoreInfo;
-import com.hazelcast.concurrent.lock.operations.LocalLockCleanupOperation;
-import com.hazelcast.concurrent.lock.operations.UnlockOperation;
-import com.hazelcast.core.DistributedObject;
-import com.hazelcast.instance.GroupProperties;
-import com.hazelcast.instance.GroupProperty;
-import com.hazelcast.instance.MemberImpl;
-import com.hazelcast.nio.serialization.Data;
-import com.hazelcast.partition.MigrationEndpoint;
-import com.hazelcast.spi.*;
-import com.hazelcast.spi.impl.PartitionSpecificRunnable;
-import com.hazelcast.spi.impl.operationservice.InternalOperationService;
-import com.hazelcast.util.Clock;
-import com.hazelcast.util.ConstructorFunction;
+import static com.hazelcast.spi.impl.OperationResponseHandlerFactory.createEmptyResponseHandler;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -24,7 +8,33 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static com.hazelcast.spi.impl.OperationResponseHandlerFactory.createEmptyResponseHandler;
+import com.hazelcast.concurrent.lock.InternalLockNamespace;
+import com.hazelcast.concurrent.lock.LockResource;
+import com.hazelcast.concurrent.lock.LockStore;
+import com.hazelcast.concurrent.lock.LockStoreInfo;
+import com.hazelcast.concurrent.lock.operations.LocalLockCleanupOperation;
+import com.hazelcast.concurrent.lock.operations.UnlockOperation;
+import com.hazelcast.core.DistributedObject;
+import com.hazelcast.instance.MemberImpl;
+import com.hazelcast.nio.serialization.Data;
+import com.hazelcast.spi.ClientAwareService;
+import com.hazelcast.spi.ManagedService;
+import com.hazelcast.spi.MemberAttributeServiceEvent;
+import com.hazelcast.spi.MembershipAwareService;
+import com.hazelcast.spi.MembershipServiceEvent;
+import com.hazelcast.spi.MigrationAwareService;
+import com.hazelcast.spi.NodeEngine;
+import com.hazelcast.spi.ObjectNamespace;
+import com.hazelcast.spi.Operation;
+import com.hazelcast.spi.OperationService;
+import com.hazelcast.spi.PartitionMigrationEvent;
+import com.hazelcast.spi.PartitionReplicationEvent;
+import com.hazelcast.spi.RemoteService;
+import com.hazelcast.spi.impl.PartitionSpecificRunnable;
+import com.hazelcast.spi.impl.operationservice.InternalOperationService;
+import com.hazelcast.spi.partition.MigrationEndpoint;
+import com.hazelcast.util.Clock;
+import com.hazelcast.util.ConstructorFunction;
 
 public final class LockServiceImpl implements LockService, ManagedService, RemoteService, MembershipAwareService,
         MigrationAwareService, ClientAwareService {
@@ -43,7 +53,8 @@ public final class LockServiceImpl implements LockService, ManagedService, Remot
             containers[i] = new LockStoreContainer(this, i);
         }
 
-        maxLeaseTimeInMillis = getMaxLeaseTimeInMillis(nodeEngine.getGroupProperties());
+        String value = System.getProperty("hazelcast.lock.max.lease.time.seconds");
+        maxLeaseTimeInMillis = value != null ? Long.parseLong(value) : Long.MAX_VALUE;
     }
 
     NodeEngine getNodeEngine() {
@@ -173,7 +184,7 @@ public final class LockServiceImpl implements LockService, ManagedService, Remot
             Data key = lock.getKey();
             if (uuid.equals(lock.getOwner()) && !lock.isTransactional()) {
                 UnlockOperation op = createUnlockOperation(partitionId, lockStore.getNamespace(), key, uuid);
-                operationService.runOperationOnCallingThread(op);
+                operationService.run(op);
             }
         }
     }
@@ -253,12 +264,11 @@ public final class LockServiceImpl implements LockService, ManagedService, Remot
 
     @Override
     public void rollbackMigration(PartitionMigrationEvent event) {
-        if (event.getMigrationEndpoint() == MigrationEndpoint.DESTINATION) {
+        if (event.getMigrationEndpoint() == com.hazelcast.spi.partition.MigrationEndpoint.DESTINATION) {
             clearPartition(event.getPartitionId());
         }
     }
 
-    @Override
     public void clearPartitionReplica(int partitionId) {
         clearPartition(partitionId);
     }
@@ -283,7 +293,4 @@ public final class LockServiceImpl implements LockService, ManagedService, Remot
         releaseLocksOwnedBy(clientUuid);
     }
 
-    public static long getMaxLeaseTimeInMillis(GroupProperties groupProperties) {
-        return groupProperties.getMillis(GroupProperty.LOCK_MAX_LEASE_TIME_SECONDS);
-    }
 }

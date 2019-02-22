@@ -324,6 +324,8 @@ final class LockResourceImpl implements DataSerializable, LockResource {
             for (ConditionKey signalKey : signalKeys) {
                 out.writeUTF(signalKey.getObjectName());
                 out.writeUTF(signalKey.getConditionId());
+                out.writeUTF(signalKey.getUuid());
+                out.writeLong(signalKey.getThreadId());
             }
         }
         int expiredAwaitOpsCount = getExpiredAwaitsOpsCount();
@@ -372,7 +374,8 @@ final class LockResourceImpl implements DataSerializable, LockResource {
         if (len > 0) {
             signalKeys = new ArrayList<ConditionKey>(len);
             for (int i = 0; i < len; i++) {
-                signalKeys.add(new ConditionKey(in.readUTF(), key, in.readUTF()));
+                signalKeys.add(new ConditionKey(in.readUTF(), key, in.readUTF(),in.readUTF(),in.readLong()));
+            	
             }
         }
 
@@ -430,4 +433,16 @@ final class LockResourceImpl implements DataSerializable, LockResource {
     private static boolean isNullOrEmpty(Map m) {
         return m == null || m.isEmpty();
     }
+
+	@Override
+	public boolean isLocal() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean shouldBlockReads() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
