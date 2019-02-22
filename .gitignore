@@ -9,3 +9,4 @@ vso.xml
 .DS_Store
 .idea
 *.iml
+/dist/
