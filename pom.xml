@@ -5,11 +5,10 @@
     <groupId>com.vmware.o11n.plugin</groupId>
     <artifactId>cache</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
-
+    <version>1.0.1</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vco.version>7.0.0</vco.version>
+        <vco.version>7.5.0</vco.version>
         <junit.version>4.11</junit.version>
         <mockito.version>1.10.19</mockito.version>
         <spring.test.version>4.3.2.RELEASE</spring.test.version>
@@ -20,7 +19,7 @@
 	        <dependency>
 			    <groupId>com.hazelcast</groupId>
 			    <artifactId>hazelcast</artifactId>
-			    <version>3.6.3</version>
+			    <version>3.11.2</version>
 			</dependency>
             <dependency>
                 <groupId>com.vmware.o11n</groupId>

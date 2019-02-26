@@ -36,7 +36,7 @@ public class CustomModule extends AbstractModule {
         plugin.setDescription("Cache");
         plugin.setDisplayName("Cache");
         plugin.setName("Cache");
-        plugin.setPackages(Collections.singletonList("o11nplugin-example-package-${project.version}.package"));
+        plugin.setPackages(Collections.singletonList("o11nplugin-cache-package-${project.version}.package"));
         plugin.setAdaptorClassName(com.vmware.o11n.plugin.cache.CachePluginAdaptor.class);
     }
 }

@@ -65,9 +65,9 @@ public final class LockStoreImpl implements DataSerializable, LockStore {
     }
 
     @Override
-    public boolean txnLock(Data key, String caller, long threadId, long referenceId, long leaseTime) {
+    public boolean txnLock(Data key, String caller, long threadId, long referenceId, long leaseTime, boolean blockReads) {
         LockResourceImpl lock = getLock(key);
-        return lock.lock(caller, threadId, referenceId, leaseTime, true);
+        return lock.lock(caller, threadId, referenceId, leaseTime, blockReads);
     }
 
     @Override
@@ -128,7 +128,6 @@ public final class LockStoreImpl implements DataSerializable, LockStore {
         }
     }
 
-    @Override
     public boolean isTransactionallyLocked(Data key) {
         LockResourceImpl lock = locks.get(key);
         return lock != null && lock.isTransactional() && lock.isLocked();
@@ -334,4 +333,23 @@ public final class LockStoreImpl implements DataSerializable, LockStore {
                 + ", asyncBackupCount=" + asyncBackupCount
                 + '}';
     }
+
+	@Override
+	public boolean localLock(Data key, String caller, long threadId, long referenceId, long leaseTime) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public int getLockedEntryCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean shouldBlockReads(Data key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
